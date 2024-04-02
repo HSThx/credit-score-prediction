@@ -5,3 +5,4 @@ requests==2.24.0
 pickle4
 gunicorn
 scikit-learn==1.4.1.post1
+xgboost
