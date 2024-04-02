@@ -17,7 +17,7 @@ import pickle
 app = Flask(__name__)
 
 #Load the trained model. (Pickle file)
-#model1 = pickle.load(open('models/rfc_model.pkl', 'rb'))pip show flask
+model1 = pickle.load(open('models/rfc_model.pkl', 'rb')) #pip show flask
 model2 = pickle.load(open('models/svm_model.pkl', 'rb'))
 model3 = pickle.load(open('models/ls_model.pkl', 'rb'))
 model4 = pickle.load(open('models/gb_model.pkl', 'rb'))
@@ -86,8 +86,8 @@ def predict():
     features = [np.array(int_features)]  #Convert to the form [[a, b]] for input to the model
     print(features) #features = [[30.0,4500.0,0.0,90.0,30.0,10.0,10.0,10.0,25.0,20.0]]
     
-    #prediction1 = model1.predict(features)  # features Must be in the form [[a, b]]
-    #print(prediction1[0])
+    prediction1 = model1.predict(features)  # features Must be in the form [[a, b]]
+    print(prediction1[0])
 
     prediction2 = model2.predict(features)  # features Must be in the form [[a, b]]
     print(prediction2[0])
@@ -101,9 +101,9 @@ def predict():
     prediction5 = model5.predict(features)  # features Must be in the form [[a, b]]
     print(prediction5[0])
 
-    #output,percent_output = get_vote([prediction1[0],prediction2[0],prediction3[0],prediction4[0],prediction5[0]])
+    output,percent_output = get_vote([prediction1[0],prediction2[0],prediction3[0],prediction4[0],prediction5[0]])
     
-    output,percent_output = get_vote([prediction2[0],prediction3[0],prediction4[0],prediction5[0]])
+    #output,percent_output = get_vote([prediction2[0],prediction3[0],prediction4[0],prediction5[0]])
     
     print("output:", output)
     print("percent_output:", percent_output)
@@ -131,4 +131,4 @@ def predict():
 #If we import this file (module) to another file then __name__ == app (which is the name of this python file).
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=8888)
