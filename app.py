@@ -17,11 +17,11 @@ import pickle
 app = Flask(__name__)
 
 #Load the trained model. (Pickle file)
-model1 = pickle.load(open('models/rfc_model.pkl', 'rb')) #pip show flask
-model2 = pickle.load(open('models/svm_model.pkl', 'rb'))
-model3 = pickle.load(open('models/ls_model.pkl', 'rb'))
-model4 = pickle.load(open('models/gb_model.pkl', 'rb'))
-model5 = pickle.load(open('models/xgb_model.pkl', 'rb'))
+model1 = pickle.load(open('models/model_rfc.pkl', 'rb')) #pip show flask
+model2 = pickle.load(open('models/model_dt.pkl', 'rb'))
+model3 = pickle.load(open('models/model_xgb.pkl', 'rb'))
+model4 = pickle.load(open('models/model_gb.pkl', 'rb'))
+model5 = pickle.load(open('models/model_svm.pkl', 'rb'))
 
 def vote(votes):
     result = {}  # สร้างพจนานุกรมเพื่อเก็บผลลัพธ์
@@ -119,7 +119,12 @@ def predict():
 
     #output = round(prediction[0], 2)
     #output = "GOOD"
-    return render_template('index.html', prediction_text='Your Credit Score : {}'.format(result))
+    #return render_template('index.html', prediction_text='Your Credit Score : {}'.format(result))
+    
+    prediction_text = 'Your Credit Score: {}'.format(result) #Output
+    prediction_text2 = 'Percent Prediction: {} %'.format(percent_output)  # % ความน่าเชื่อถือ
+
+    return render_template('index.html', prediction_text=prediction_text, prediction_text2=prediction_text2)  
 
 
 #When the Python interpreter reads a source file, it first defines a few special variables. 
