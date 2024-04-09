@@ -1,42 +1,130 @@
 <!DOCTYPE html>
-<html >
+<html>
 <head>
-  <meta charset="UTF-8">
-  
-  <!-- Make it compatible to mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Credit Score Prediction</title>
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Score Prediction</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #0ba8e6;
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #0074a9;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0ba8e6;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0074a9;
+            }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+            .result h3 {
+                color: #33d348;
+                font-size: 20px;
+            }
+
+            .result h4 {
+                color: #0ba8e6;
+                font-size: 16px;
+            }
+    </style>
 </head>
+<body>
+    <div class="container">
+        <h1>Credit Score Prediction</h1>
+        <form action="{{ url_for('predict') }}" method="post">
+            <label for="Outstanding_Debt">หนี้ค้างชำระ (USD):</label>
+            <input type="text" id="Outstanding_Debt" name="Outstanding_Debt" placeholder="Outstanding Debt" required>
 
-<body style="background: #000000;">
- <div class="login">
-	<h1 style="color:rgb(11, 168, 230);">Credit score prediction</h1>
+            <label for="Interest_Rate">อัตราดอกเบี้ยบัตรเครดิต (1-35 %):</label>
+            <input type="text" id="Interest_Rate" name="Interest_Rate" placeholder="Interest Rate" required>
 
-     <!-- Action is where the data is sent. In our case, predict page.
-     If action is omitted, it assumed to be the current page -->
-    <form action="{{ url_for('predict')}}"method="post">
-    	<input type="text" name="Interest_Rate" placeholder="Interest Rate" required="required" /><p>
-      <input type="text" name="Outstanding_Debt" placeholder="Outstanding Debt" required="required" /><p>
-      <input type="text" name="Payment_of_Min_Amount" placeholder="Payment of Min_Amount-Yes" required="required" /><p>
-      <input type="text" name="Credit_History_Age" placeholder="Credit_History_Age" required="required" /><p>
-      <input type="text" name="Delay_from_due_date" placeholder="Delay_from_due_date" required="required" /><p>
-      <input type="text" name="Num_Bank_Accounts" placeholder="Num_Bank_Accounts" required="required" /><p>
-      <input type="text" name="Num_Credit_Card" placeholder="Num_Credit_Card" required="required" /><p>
-      <input type="text" name="Num_Credit_Inquiries" placeholder="Num_Credit_Inquiries" required="required" /><p>
-      <input type="text" name="Changed_Credit_Limit" placeholder="Changed_Credit_Limit" required="required" /><p>
-        <input type="text" name="Num_of_Delayed_Payment" placeholder="Num_of_Delayed_Payment" required="required" /><p></p>
-       <button type="submit" class="btn btn-primary btn-block btn-large">Predict credit scoring</button></p>
-    </form>
+            <label for="Credit_Mix">ประเภทความเสี่ยง:</label>
+            <select id="Credit_Mix" name="Credit_Mix" required>
+                <option value="2">Good</option>
+                <option value="1">Standard</option>
+                <option value="0">Bad</option>
+            </select>
 
-   <br>
-   <br>
-   <h4 style="color:rgb(73, 210, 58);">
-   {{ prediction_text }} </h4>
+            <label for="Delay_from_due_date">จำนวนวันเฉลี่ยที่ชำระล่าช้า (วัน):</label>
+            <input type="text" id="Delay_from_due_date" name="Delay_from_due_date" placeholder="Delay_from_due_date" required>
 
- </div>
+            <label for="Changed_Credit_Limit">อัตราการเปลี่ยนแปลงวงเงินในบัตร (%) :</label>
+            <input type="text" id="Changed_Credit_Limit" name="Changed_Credit_Limit" placeholder="Changed_Credit_Limit" required>
 
+            <label for="Payment_of_Min_Amount">สถานะจ่ายขั้นต่ำ:</label>
+            <select id="Payment_of_Min_Amount" name="Payment_of_Min_Amount" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
 
+            <label for="Num_Credit_Card">จำนวนบัตรเครดิต:</label>
+            <input type="text" id="Num_Credit_Card" name="Num_Credit_Card" placeholder="Num_Credit_Card" required>
+
+            <label for="Total_EMI_per_month">จำนวนเงินที่ต้องชำระต่อเดือน (USD):</label>
+            <input type="text" id="Total_EMI_per_month" name="Total_EMI_per_month" placeholder="Total_EMI_per_month" required>
+
+            <label for="Credit_History_Age">ระยะเวลาการใช้บัตรเครดิต:</label>
+            <input type="text" id="Credit_History_Age" name="Credit_History_Age" placeholder="Credit_History_Age" required>
+
+            <label for="Num_Credit_Inquiries">จำนวนการสอบถามบัตรเครดิต (วัน):</label>
+            <input type="text" id="Num_Credit_Inquiries" name="Num_Credit_Inquiries" placeholder="Num_Credit_Inquiries" required>
+
+            <button type="submit">Predict Credit Scoring</button>
+        </form>
+        <div class="result">
+            <h3>{{ prediction_text }}</h3>
+            <h4>{{ prediction_text2 }}</h4>
+        </div>
+    </div>
 </body>
 </html>
