@@ -82,12 +82,6 @@
     <div class="container">
         <h1>Credit Score Prediction</h1>
         <form action="{{ url_for('predict') }}" method="post">
-            <label for="Outstanding_Debt">หนี้ค้างชำระ (USD):</label>
-            <input type="text" id="Outstanding_Debt" name="Outstanding_Debt" placeholder="Outstanding Debt" required>
-
-            <label for="Interest_Rate">อัตราดอกเบี้ยบัตรเครดิต (1-35%):</label>
-            <input type="text" id="Interest_Rate" name="Interest_Rate" placeholder="Interest Rate" required>
-
             <label for="Credit_Mix">ประเภทความเสี่ยง:</label>
             <select id="Credit_Mix" name="Credit_Mix" required>
                 <option value="2">Good</option>
@@ -95,26 +89,29 @@
                 <option value="0">Bad</option>
             </select>
 
-            <label for="Delay_from_due_date">จำนวนวันเฉลี่ยที่ชำระล่าช้า (วัน):</label>
-            <input type="text" id="Delay_from_due_date" name="Delay_from_due_date" placeholder="Delay_from_due_date" required>
+            <label for="Outstanding_Debt">หนี้ค้างชำระ (USD):</label>
+            <input type="text" id="Outstanding_Debt" name="Outstanding_Debt" placeholder="Outstanding Debt" required>
+
+            <label for="Interest_Rate">อัตราดอกเบี้ยบัตรเครดิต (1-35 %):</label>
+            <input type="text" id="Interest_Rate" name="Interest_Rate" placeholder="Interest Rate" required>
 
             <label for="Changed_Credit_Limit">อัตราการเปลี่ยนแปลงวงเงินในบัตร (%) :</label>
             <input type="text" id="Changed_Credit_Limit" name="Changed_Credit_Limit" placeholder="Changed_Credit_Limit" required>
 
-            <label for="Payment_of_Min_Amount">สถานะจ่ายขั้นต่ำ:</label>
-            <select id="Payment_of_Min_Amount" name="Payment_of_Min_Amount" required>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            <label for="Credit_History_Age">ระยะเวลาการใช้บัตรเครดิต (วัน):</label>
+            <input type="text" id="Credit_History_Age" name="Credit_History_Age" placeholder="Credit_History_Age" required>
 
-            <label for="Num_Credit_Card">จำนวนบัตรเครดิต:</label>
-            <input type="text" id="Num_Credit_Card" name="Num_Credit_Card" placeholder="Num_Credit_Card" required>
+            <label for="Delay_from_due_date">จำนวนวันเฉลี่ยที่ชำระล่าช้า (วัน):</label>
+            <input type="text" id="Delay_from_due_date" name="Delay_from_due_date" placeholder="Delay_from_due_date" required>
 
             <label for="Total_EMI_per_month">จำนวนเงินที่ต้องชำระต่อเดือน (USD):</label>
             <input type="text" id="Total_EMI_per_month" name="Total_EMI_per_month" placeholder="Total_EMI_per_month" required>
 
-            <label for="Credit_History_Age">ระยะเวลาการใช้บัตรเครดิต (วัน):</label>
-            <input type="text" id="Credit_History_Age" name="Credit_History_Age" placeholder="Credit_History_Age" required>
+            <label for="Annual_Income">รายได้ต่อปี (USD):</label>
+            <input type="text" id="Annual_Income" name="Annual_Income" placeholder="Annual_Income" required>
+
+            <label for="Num_Credit_Card">จำนวนบัตรเครดิต:</label>
+            <input type="text" id="Num_Credit_Card" name="Num_Credit_Card" placeholder="Num_Credit_Card" required>
 
             <label for="Num_Credit_Inquiries">จำนวนการสอบถามบัตรเครดิต (ครั้ง):</label>
             <input type="text" id="Num_Credit_Inquiries" name="Num_Credit_Inquiries" placeholder="Num_Credit_Inquiries" required>
@@ -123,7 +120,7 @@
         </form>
         <div class="result">
             <h3>{{ prediction_text }}</h3>
-            <h4>{{ prediction_text2 }}</h4>
+            <!--<h4>{{ prediction_text2 }}</h4>-->
         </div>
     </div>
 </body>
