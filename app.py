@@ -17,11 +17,13 @@ import pickle
 app = Flask(__name__)
 
 #Load the trained model. (Pickle file)
-model1 = pickle.load(open('models/model_rfc.pkl', 'rb')) #pip show flask
-model2 = pickle.load(open('models/model_dt.pkl', 'rb'))
-model3 = pickle.load(open('models/model_xgb.pkl', 'rb'))
-model4 = pickle.load(open('models/model_gb.pkl', 'rb'))
-model5 = pickle.load(open('models/model_svm.pkl', 'rb'))
+#model1 = pickle.load(open('models/model_rfc.pkl', 'rb')) #pip show flask
+#model2 = pickle.load(open('models/model_dt.pkl', 'rb'))
+#model3 = pickle.load(open('models/model_xgb.pkl', 'rb'))
+#model4 = pickle.load(open('models/model_gb.pkl', 'rb'))
+#model5 = pickle.load(open('models/model_svm.pkl', 'rb'))
+
+model1 = pickle.load(open('models/m_gb.pkl', 'rb'))
 
 def vote(votes):
     result = {}  # สร้างพจนานุกรมเพื่อเก็บผลลัพธ์
@@ -81,32 +83,32 @@ def predict():
 
     
     int_features = [float(x) for x in request.form.values()] #Convert string inputs to float.
-    print(int_features) #int_features = [30.0,4500.0,0.0,90.0,30.0,10.0,10.0,10.0,25.0,20.0]
+    print(int_features) #int_features = [2.0, 2000.0, 10.0, 0.0, 300.0, 0.0, 1000.0, 1500000.0, 2.0, 2.0]
 
     features = [np.array(int_features)]  #Convert to the form [[a, b]] for input to the model
-    print(features) #features = [[30.0,4500.0,0.0,90.0,30.0,10.0,10.0,10.0,25.0,20.0]]
+    print(features) #features = [[2.0, 2000.0, 10.0, 0.0, 300.0, 0.0, 1000.0, 1500000.0, 2.0, 2.0]]
     
     prediction1 = model1.predict(features)  # features Must be in the form [[a, b]]
     print(prediction1[0])
 
-    prediction2 = model2.predict(features)  # features Must be in the form [[a, b]]
-    print(prediction2[0])
+    # prediction2 = model2.predict(features)  # features Must be in the form [[a, b]]
+    # print(prediction2[0])
 
-    prediction3 = model3.predict(features)  # features Must be in the form [[a, b]]
-    print(prediction3[0])
+    # prediction3 = model3.predict(features)  # features Must be in the form [[a, b]]
+    # print(prediction3[0])
 
-    prediction4 = model4.predict(features)  # features Must be in the form [[a, b]]
-    print(prediction4[0])
+    # prediction4 = model4.predict(features)  # features Must be in the form [[a, b]]
+    # print(prediction4[0])
 
-    prediction5 = model5.predict(features)  # features Must be in the form [[a, b]]
-    print(prediction5[0])
+    # prediction5 = model5.predict(features)  # features Must be in the form [[a, b]]
+    # print(prediction5[0])
 
-    output,percent_output = get_vote([prediction1[0],prediction2[0],prediction3[0],prediction4[0],prediction5[0]])
+    #output,percent_output = get_vote([prediction1[0],prediction2[0],prediction3[0],prediction4[0],prediction5[0]])
     
-    #output,percent_output = get_vote([prediction2[0],prediction3[0],prediction4[0],prediction5[0]])
+    output = prediction1[0]
     
     print("output:", output)
-    print("percent_output:", percent_output)
+    #print("percent_output:", percent_output)
 
     if output == 0:
         result = "Poor"
@@ -121,10 +123,12 @@ def predict():
     #output = "GOOD"
     #return render_template('index.html', prediction_text='Your Credit Score : {}'.format(result))
     
-    prediction_text = 'Your Credit Score: {}'.format(result) #Output
-    prediction_text2 = 'Percent Prediction: {} %'.format(percent_output)  # % ความน่าเชื่อถือ
+    #prediction_text2 = 'Percent Prediction: {} %'.format(percent_output)  # % ความน่าเชื่อถือ
+    #return render_template('index.html', prediction_text=prediction_text, prediction_text2=prediction_text2)  
 
-    return render_template('index.html', prediction_text=prediction_text, prediction_text2=prediction_text2)  
+
+    prediction_text = 'Your Credit Score: {}'.format(result) #Output
+    return render_template('index.html', prediction_text=prediction_text)
 
 
 #When the Python interpreter reads a source file, it first defines a few special variables. 
